@@ -4,11 +4,17 @@ Claude Code skill：用 hap-cli 在 mingdao.com **服务管理›工单反馈** 
 
 ## 安装
 
+Claude Code：
+
 ```bash
 git clone https://github.com/Oscarw212/mingdao-ticket-general.git ~/.claude/skills/mingdao-ticket-general
 ```
 
-或者直接把 `SKILL.md` 放到 `~/.claude/skills/mingdao-ticket-general/SKILL.md`。
+Codex CLI（同一份 SKILL.md，Codex 也支持 Agent Skills 格式）：
+
+```bash
+git clone https://github.com/Oscarw212/mingdao-ticket-general.git ~/.codex/skills/mingdao-ticket-general
+```
 
 ## 前置条件
 
@@ -17,7 +23,7 @@ git clone https://github.com/Oscarw212/mingdao-ticket-general.git ~/.claude/skil
 
 ## 用法
 
-在 Claude Code 里说「帮我开个工单 / 报 bug / 提需求」即可触发。Claude 会先给出标题 + 描述 draft，你确认后才会真正创建工单。
+把截图 / 附件丢给 agent，简单一两句描述问题，说「帮我开个工单」即可。agent 会自己整理成标题 + 描述（BUG 类会补齐复现步骤 / 预期 vs 实际），先给你看 draft，你确认后才真正创建工单。
 
 默认值：
 - 提交人 = 当前登录用户
