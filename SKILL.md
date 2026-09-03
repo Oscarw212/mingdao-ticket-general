@@ -12,7 +12,20 @@ description: 帮用户在 mingdao.com 服务管理›工单反馈 提交产品�
    - **BUG**：3W（谁/什么时候/做了什么）+ **复现步骤 + 预期结果 vs 实际结果 + 影响范围**
    - **需求/建议**：3W + 期望方案 + 业务理由（可加需求等级 1–5）
    - **使用咨询**：场景 + 具体问题
-4. 示意图要**整张屏幕截图**（平台要求 full screen）。问用户截图文件在哪。
+4. 示意图要**整张屏幕截图**（平台要求 full screen）。用户把文件拖进对话时直接用那个路径；没给路径就按下面「自动找截图」找，找到后把文件名 + 时间列给用户确认。
+
+## 自动找截图 / 附件
+用户没说文件在哪时，先自己找，不要一开口就问：
+1. 先看 macOS 截图默认位置：`defaults read com.apple.screencapture location 2>/dev/null`，没设置就是 `~/Desktop`。
+2. 在这些目录找最近 2 小时内的图片 / 文档（按时间倒序）：
+   ```bash
+   find ~/Desktop ~/Downloads ~/Documents ~/Pictures -maxdepth 2 -type f \
+     \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.gif' -o -iname '*.mp4' -o -iname '*.mov' -o -iname '*.pdf' -o -iname '*.docx' -o -iname '*.xlsx' \) \
+     -mmin -120 2>/dev/null | xargs -I{} stat -f '%m %N' {} | sort -rn | head -10
+   ```
+   Windows 用户改查 `%USERPROFILE%\Pictures\Screenshots`、`Downloads`、`Desktop`。
+3. 把候选文件名 + 修改时间列出来，问用户「用这几张？」——用户确认后再上传。能读图的话先打开看一眼，确认内容和描述对得上。
+4. 完全找不到才让用户提供路径或重新截图。
 
 ## 前置条件
 - 已安装 hap-cli（`hap --version`，需 ≥ 0.8.25），并已 `hap auth login` 登录 **mingdao.com**（Host `https://www.mingdao.com`）。
